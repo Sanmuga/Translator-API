@@ -10,8 +10,8 @@ load_dotenv()
 app = Flask(__name__)
 
 # --- Configurations ---
-API_KEY = os.getenv("AI_API_KEY")
-API_SECRET = os.getenv("API_ACCESS_SECRET")
+API_KEY = os.getenv("GEMINI_API_KEY")
+API_SECRET = os.getenv("RAPIDAPI_PROXY_SECRET")
 
 if not API_KEY:
     raise ValueError("AI_API_KEY not found in .env file.")

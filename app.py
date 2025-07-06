@@ -1,41 +1,4 @@
 import os
-from flask import Flask, request, jsonify, abort
-from dotenv import load_dotenv
-from functools import wraps
-import google.generativeai as genai
-
-# --- Load environment variables ---
-load_dotenv()
-
-app = Flask(__name__)
-
-# --- Configurations ---
-API_KEY = os.getenv("GEMINI_API_KEY")
-API_SECRET = os.getenv("RAPIDAPI_PROXY_SECRET")
-
-if not API_KEY:
-    raise ValueError("AI_API_KEY not found in .env file.")
-if not API_SECRET:
-    raise ValueError("API_ACCESS_SECRET not found in .env file.")
-
-# --- Initialize AI Model ---
-genai.configure(api_key=API_KEY)
-model = genai.GenerativeModel("gemini-1.5-flash-latest")
-
-# --- Security Middleware ---
-def require_api_secret(f):
-    @wraps(f)
-    def wrapper(*args, **kwargs):
-        if request.headers.get("X-API-Access-Secret") != API_SECRET:
-            abort(403, description="Unauthorized access.")
-        return f(*args, **kwargs)
-    return wrapper
-
-# --- Routes ---
-@app.route('/')
-def index():
-    return jsonify({
-import os
 import google.generativeai as genai
 from flask import Flask, request, jsonify, abort
 from dotenv import load_dotenv
